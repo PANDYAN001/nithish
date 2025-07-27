@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <link rel="stylesheet" href="happy.css">
+</head>
+<body>
+  <!-- Editable Inputs -->
+  <div class="editor">
+    <input type="text" id="titleInput" placeholder="Enter Birthday Title">
+    <textarea id="messageInput" placeholder="Enter your passage"></textarea>
+    <button onclick="updateText()">Update</button>
+  </div>
+
+  <!-- Display Area -->
+  <h1 id="title">🎉 Happy Birthday 🎉</h1>
+  <p id="message">This is your own passage area. Example: Wishing you endless happiness and joy! 🎂🎈</p>
+
+  <!-- Balloons -->
+  <div class="balloon" style="left:10%; background:#ff6f61;"></div>
+  <div class="balloon" style="left:30%; background:#6ec6ff; animation-delay:1s;"></div>
+  <div class="balloon" style="left:50%; background:#ffd54f; animation-delay:2s;"></div>
+  <div class="balloon" style="left:70%; background:#81c784; animation-delay:3s;"></div>
+  <div class="balloon" style="left:90%; background:#ba68c8; animation-delay:1.5s;"></div>
+
+  <!-- Confetti -->
+  <script>
+    for (let i = 0; i < 50; i++) {
+      let confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+      confetti.style.animationDelay = Math.random() * 5 + 's';
+      confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+      document.body.appendChild(confetti);
+    }
+
+    function updateText() {
+      let titleValue = document.getElementById("titleInput").value;
+      let messageValue = document.getElementById("messageInput").value;
+
+      if (titleValue.trim() !== "") {
+        document.getElementById("title").innerText = titleValue;
+      }
+      if (messageValue.trim() !== "") {
+        document.getElementById("message").innerText = messageValue;
+      }
+    }
+  </script>
+</body>
+</html>

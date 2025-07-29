@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday</title>
-  <link rel="stylesheet" href="happy.css">
+  <link rel="stylesheet" href="index.css.css">
 </head>
 <body>
   <!-- Editable Inputs -->
   <div class="editor">
-    <input type="text" id="titleInput" placeholder="Enter Birthday Title">
-    <textarea id="messageInput" placeholder="Enter your passage"></textarea>
+    <input type="text" id="titleInput" placeholder="Enter Birthday Title" maxlength="100">
+    <textarea id="messageInput" placeholder="Enter your passage" maxlength="500"></textarea>
     <button onclick="updateText()">Update</button>
   </div>
 
@@ -27,24 +27,46 @@
 
   <!-- Confetti -->
   <script>
-    for (let i = 0; i < 50; i++) {
-      let confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
-      confetti.style.animationDelay = Math.random() * 5 + 's';
-      confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
-      document.body.appendChild(confetti);
+    // Create confetti with proper cleanup
+    function createConfetti() {
+      for (let i = 0; i < 50; i++) {
+        let confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        
+        let delay = Math.random() * 5;
+        let duration = 3 + Math.random() * 2;
+        confetti.style.animationDelay = delay + 's';
+        confetti.style.animationDuration = duration + 's';
+        
+        document.body.appendChild(confetti);
+        
+        // Remove confetti element after animation completes
+        setTimeout(() => {
+          if (confetti.parentNode) {
+            confetti.parentNode.removeChild(confetti);
+          }
+        }, (delay + duration) * 1000 + 100); // Add small buffer
+      }
     }
+    
+    // Initial confetti creation
+    createConfetti();
 
     function updateText() {
       let titleValue = document.getElementById("titleInput").value;
       let messageValue = document.getElementById("messageInput").value;
 
+      // Input validation and sanitization
       if (titleValue.trim() !== "") {
+        // Limit title to 100 characters and sanitize
+        titleValue = titleValue.trim().substring(0, 100);
         document.getElementById("title").innerText = titleValue;
       }
       if (messageValue.trim() !== "") {
+        // Limit message to 500 characters and sanitize
+        messageValue = messageValue.trim().substring(0, 500);
         document.getElementById("message").innerText = messageValue;
       }
     }
